@@ -86,7 +86,7 @@ public class GalleryGUI extends JFrame {
             button.setContentAreaFilled(false);
             button.setName(file.getName());
             button.setIcon(icon);
-            button.addActionListener(new ShowImageButtonActionListener(image));
+            button.addActionListener(new ShowImageButtonActionListener(image, file.getName()));
             images.add(button);
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class GalleryGUI extends JFrame {
                 button.setContentAreaFilled(false);
                 button.setName(file.getName());
                 button.setIcon(icon);
-                button.addActionListener(new ShowImageButtonActionListener(image));
+                button.addActionListener(new ShowImageButtonActionListener(image, file.getName()));
                 images.add(button);
             }
 
@@ -123,27 +123,15 @@ public class GalleryGUI extends JFrame {
             if (ret == JFileChooser.APPROVE_OPTION) {
                 File addedImage = fileopen.getSelectedFile();
                 String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
-            if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
-                    || ext.equalsIgnoreCase("jpeg")) {
-                listOfImages.add(addedImage);
-                addImage(addedImage);
-                images.updateUI();
-            } else{
-                JOptionPane.showMessageDialog(null, "This is not an image");
+                if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
+                        || ext.equalsIgnoreCase("jpeg")) {
+                    listOfImages.add(addedImage);
+                    addImage(addedImage);
+                    images.updateUI();
+                } else{
+                    JOptionPane.showMessageDialog(null, "This is not an image");
+                }
             }
-            }
-//            String filePath = JOptionPane.showInputDialog("Input file path");
-//            System.out.println(filePath);
-//            File addedImage = new File(filePath);
-//            String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
-//            if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
-//                    || ext.equalsIgnoreCase("jpeg")) {
-//                listOfImages.add(addedImage);
-//                addImage(addedImage);
-//                images.updateUI();
-//            } else{
-//                JOptionPane.showMessageDialog(null, "This is not an image");
-//            }
         }
     }
 
@@ -151,15 +139,20 @@ public class GalleryGUI extends JFrame {
     public static class ShowImageButtonActionListener implements ActionListener{
 
         private final BufferedImage image;
+        private final String imageName;
 
-        public ShowImageButtonActionListener(BufferedImage image){
+        public ShowImageButtonActionListener(BufferedImage image, String imageName){
             this.image = image;
+            this.imageName = imageName;
         }
         @Override
         public void actionPerformed(ActionEvent e) {
             ImageIcon icon = new ImageIcon(image);
             JLabel label = new JLabel(icon);
-            JOptionPane.showMessageDialog(null, label);
+            JOptionPane.showMessageDialog(label, "Image title: \n"
+                            + imageName,
+                    "Message with Image",
+                    JOptionPane.INFORMATION_MESSAGE, icon);
         }
     }
 
