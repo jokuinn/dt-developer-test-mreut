@@ -15,6 +15,7 @@ public class GalleryGUI extends JFrame {
     private static final int WIDTH = 1024;
     private static final int HEIGHT = 768;
 
+    //создание массива файлов
     private final File folder = new File("assets");
     private final File[] files = folder.listFiles();
     private final ArrayList<File> listOfImages;
@@ -24,6 +25,7 @@ public class GalleryGUI extends JFrame {
         listOfImages = new ArrayList<>(Arrays.asList(files));
     }
 
+    //компоненты GUI
     private final JFrame frame = new JFrame("DT Developer Test");
     private final JLabel searchText = new JLabel("Search ");
     private final JTextField searchImage = new JTextField(30);
@@ -35,36 +37,36 @@ public class GalleryGUI extends JFrame {
 
 
     public void run(){
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-
+        //описание кнопки поиска изображения
         searchImageButton.setBackground(Color.BLACK);
         searchImageButton.setForeground(Color.WHITE);
         searchImageButton.addActionListener(new SearchImageButtonActionListener());
 
-
+        //описание кнопки добавления изображения
         addImageButton.setBackground(Color.BLACK);
         addImageButton.setForeground(Color.WHITE);
         addImageButton.addActionListener(new AddImageButtonActionListener());
 
-
+        //добавление на панель всех компонентов
         panel.add(searchText);
         panel.add(searchImage);
         panel.add(searchImageButton);
         panel.add(addImageButton);
         frame.add(panel, BorderLayout.PAGE_START);
 
-
+        //реализация добавления изображений в массив изображений
         for (File file: listOfImages){
             if (file.isFile()){
                 addImage(file);
             }
         }
+        //пагинация
         JScrollPane scrollPane = new JScrollPane(images);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -73,6 +75,7 @@ public class GalleryGUI extends JFrame {
 
     }
 
+    //функция добавления изображений в JPanel
     public void addImage(File file){
         button = new JButton();
         try {
@@ -90,6 +93,7 @@ public class GalleryGUI extends JFrame {
         }
     }
 
+    //функция поиска изображения
     public void searchImage(File file, String searchText){
         button = new JButton();
         try {
@@ -110,6 +114,7 @@ public class GalleryGUI extends JFrame {
         }
     }
 
+    //Listener для кнопки добавления изображения
     public class AddImageButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -122,6 +127,7 @@ public class GalleryGUI extends JFrame {
         }
     }
 
+    //Listener для отображения полного размера изображения по нажатию на него
     public static class ShowImageButtonActionListener implements ActionListener{
 
         private final BufferedImage image;
@@ -137,6 +143,7 @@ public class GalleryGUI extends JFrame {
         }
     }
 
+    //Listener для кнопки поиска изображения
     public class SearchImageButtonActionListener implements ActionListener{
 
         @Override
