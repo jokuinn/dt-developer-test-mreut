@@ -121,9 +121,15 @@ public class GalleryGUI extends JFrame {
             String filePath = JOptionPane.showInputDialog("Input file path");
             System.out.println(filePath);
             File addedImage = new File(filePath);
-            listOfImages.add(addedImage);
-            addImage(addedImage);
-            images.updateUI();
+            String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
+            if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
+                    || ext.equalsIgnoreCase("jpeg")) {
+                listOfImages.add(addedImage);
+                addImage(addedImage);
+                images.updateUI();
+            } else{
+                JOptionPane.showMessageDialog(null, "This is not an image");
+            }
         }
     }
 
