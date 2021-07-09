@@ -118,10 +118,11 @@ public class GalleryGUI extends JFrame {
     public class AddImageButtonActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String filePath = JOptionPane.showInputDialog("Input file path");
-            System.out.println(filePath);
-            File addedImage = new File(filePath);
-            String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
+            JFileChooser fileopen = new JFileChooser();
+            int ret = fileopen.showDialog(null, "Открыть файл");
+            if (ret == JFileChooser.APPROVE_OPTION) {
+                File addedImage = fileopen.getSelectedFile();
+                String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
             if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
                     || ext.equalsIgnoreCase("jpeg")) {
                 listOfImages.add(addedImage);
@@ -130,6 +131,19 @@ public class GalleryGUI extends JFrame {
             } else{
                 JOptionPane.showMessageDialog(null, "This is not an image");
             }
+            }
+//            String filePath = JOptionPane.showInputDialog("Input file path");
+//            System.out.println(filePath);
+//            File addedImage = new File(filePath);
+//            String ext = addedImage.getName().substring(addedImage.getName().indexOf(".") + 1);
+//            if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png")
+//                    || ext.equalsIgnoreCase("jpeg")) {
+//                listOfImages.add(addedImage);
+//                addImage(addedImage);
+//                images.updateUI();
+//            } else{
+//                JOptionPane.showMessageDialog(null, "This is not an image");
+//            }
         }
     }
 
